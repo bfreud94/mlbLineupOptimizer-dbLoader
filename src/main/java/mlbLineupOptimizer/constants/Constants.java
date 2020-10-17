@@ -37,5 +37,5 @@ public final class Constants {
     // Misc
     public static final String cardinalsInvalid = "St. Louis Cardinals";
     public static final String cardinalsValid = "St Louis Cardinals";
-    public static final String properties = "system.properties";
+    public static final String properties = "mongo.properties";
 }

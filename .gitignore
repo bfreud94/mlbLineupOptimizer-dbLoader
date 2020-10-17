@@ -2,7 +2,7 @@
 /.settings
 
 # Properties
-system.properties
+mongo.properties
 
 # VSCode Preferences
 /.vscode
