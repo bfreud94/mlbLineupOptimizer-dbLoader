@@ -1,0 +1,11 @@
+# Settings
+/.settings
+
+# Properties
+system.properties
+
+# VSCode Preferences
+/.vscode
+
+# Target
+/target
