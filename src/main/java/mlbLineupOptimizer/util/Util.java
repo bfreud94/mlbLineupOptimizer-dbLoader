@@ -38,7 +38,21 @@ public class Util {
         } else {
             return System.getenv(Constants.mongoUrl);
         }
-        return "";
+        return Constants.emptyString;
+    }
+
+    public static String getTeamDivision(String leagueElement, int index) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(leagueElement.equals(Constants.standingsAL) ? Constants.americanLeague : Constants.nationalLeague);
+        sb.append(Constants.space);
+        if(index > 0 && index < 6) {
+            sb.append(Constants.east);
+        } else if(index > 6 && index < 12) {
+            sb.append(Constants.central);
+        } else {
+            sb.append(Constants.west);
+        }
+        return sb.toString();
     }
 
     public static void dropDatabase(String databaseName) {

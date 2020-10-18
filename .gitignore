@@ -9,3 +9,6 @@ mongo.properties
 
 # Target
 /target
+
+# README (Only should be visible to those with access)
+README.md

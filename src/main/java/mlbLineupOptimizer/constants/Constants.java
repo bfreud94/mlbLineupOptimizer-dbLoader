@@ -21,8 +21,22 @@ public final class Constants {
     public static final String thead = "thead";
     public static final String td = "td";
     public static final String tr = "tr";
+    public static final String th = "th";
     public static final String tbody = "tbody";
     public static final String title = "title";
+    public static final String tfoot = "tfoot";
+
+    // Element Hardcoded Values
+    public static final String cardinalsInvalid = "St. Louis Cardinals";
+    public static final String cardinalsValid = "St Louis Cardinals";
+    public static final String teamTotals = "Team Totals";
+    public static final String dataStat = "data-stat";
+    public static final String wins = "W";
+    public static final String losses = "L";
+    public static final String games = "G";
+    public static final String gamesStarted = "GS";
+    public static final String gamesFinished = "GF";
+    public static final String classAttribute = "class";
 
     // Database Collection Names
     public static final String batters = "batters";
@@ -30,13 +44,19 @@ public final class Constants {
     public static final String teams = "teams";
 
     // Database Access
+    public static final String properties = "mongo.properties";
     public static final String mongoUrl = "mongourl";
     public static final String mongoDb = "mongodb";
     public static final String mlbv2 = "mlbv2";
 
-    // Misc
-    public static final String cardinalsInvalid = "St. Louis Cardinals";
-    public static final String cardinalsValid = "St Louis Cardinals";
-    public static final String properties = "mongo.properties";
+    // League/Division Constants
+    public static final String americanLeague = "American League";
+    public static final String nationalLeague = "National League";
+    public static final String east = "East";
+    public static final String central = "Central";
+    public static final String west = "West";
+
+    // Character Constants
     public static final String emptyString = "";
+    public static final String space = " ";
 }

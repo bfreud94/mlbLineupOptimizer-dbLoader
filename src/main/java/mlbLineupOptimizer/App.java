@@ -16,7 +16,7 @@ public class App {
         
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 00);
-        today.set(Calendar.MINUTE, 24);
+        today.set(Calendar.MINUTE, 00);
         today.set(Calendar.SECOND, 00);
 
         CronService service = new CronService();

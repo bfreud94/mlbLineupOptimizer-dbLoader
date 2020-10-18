@@ -35,7 +35,7 @@ public class CronService extends TimerTask {
             MongoClientURI uri = new MongoClientURI(Util.getMongoUri());
             MongoClient mongoClient = new MongoClient(uri);
             MongoDatabase database = mongoClient.getDatabase(Constants.mlbv2);
-            List<Team> teams = TeamService.getAllTeamsUrlMap(webClient);
+            List<Team> teams = TeamService.getAllTeams(webClient);
             Gson gson = new Gson();
             populateTeams(webClient, gson, database, teams);
             populateBatters(webClient, gson, database, teams);
