@@ -12,9 +12,9 @@ public class App {
         Timer timer = new Timer();
         
         Calendar today = Calendar.getInstance();
-        today.set(Calendar.HOUR_OF_DAY, 19);
-        today.set(Calendar.MINUTE, 45);
-        today.set(Calendar.SECOND, 0);
+        today.set(Calendar.HOUR_OF_DAY, 00);
+        today.set(Calendar.MINUTE, 11);
+        today.set(Calendar.SECOND, 00);
 
         CronService service = new CronService();
         timer.schedule(service, today.getTime(), TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));

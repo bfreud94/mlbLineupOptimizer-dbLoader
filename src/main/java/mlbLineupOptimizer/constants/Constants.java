@@ -30,8 +30,8 @@ public final class Constants {
     public static final String teams = "teams";
 
     // Database Access
-    public static final String mongoUrl = "mongo.url";
-    public static final String mongoDb = "mongo.db";
+    public static final String mongoUrl = "mongourl";
+    public static final String mongoDb = "mongodb";
     public static final String mlbv2 = "mlbv2";
 
     // Misc
