@@ -15,24 +15,26 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import mlbLineupOptimizer.constants.Constants;
 import mlbLineupOptimizer.model.Batter;
 import mlbLineupOptimizer.model.Pitcher;
+import mlbLineupOptimizer.model.Team;
 import mlbLineupOptimizer.util.Util;
 
 public class TeamService {
 
-    public static Map<String, List<Batter>> getTeamBattingRosters(WebClient client, Map<String, String> teamUrlMap) {
+    public static Map<String, List<Batter>> getTeamBattingRosters(WebClient client, List<Team> teams) {
         Map<String, List<Batter>> map = new HashMap<String, List<Batter>>();
-        for(String team: teamUrlMap.keySet()) {
-            String teamUrl = teamUrlMap.get(team);
+        for(Team team: teams) {
+            String teamName = team.getName();
+            String teamUrl = team.getUrl();
             try {
                 HtmlPage page = client.getPage(teamUrl);
                 DomElement hittingTable = getTable(page, Constants.teamBatting);
                 DomNodeList<HtmlElement> tableRows = hittingTable.getElementsByTagName(Constants.tr);
                 for(HtmlElement row: tableRows) {
                     if(!row.getFirstChild().asText().equals(Constants.rk)) {
-                        Batter batter = BatterService.createBatter(row, team);
-                        List<Batter> roster = map.containsKey(team) ? map.get(team) : new ArrayList<Batter>();
+                        Batter batter = BatterService.createBatter(row, teamName);
+                        List<Batter> roster = map.containsKey(teamName) ? map.get(teamName) : new ArrayList<Batter>();
                         roster.add(batter);
-                        map.put(team, roster);
+                        map.put(teamName, roster);
                     }
                 }
             } catch(Exception e) {
@@ -43,20 +45,21 @@ public class TeamService {
         return map;
     }
 
-    public static Map<String, List<Pitcher>> getTeamPitchingRosters(WebClient client, Map<String, String> teamUrlMap) {
+    public static Map<String, List<Pitcher>> getTeamPitchingRosters(WebClient client, List<Team> teams) {
         Map<String, List<Pitcher>> map = new HashMap<String, List<Pitcher>>();
-        for(String team: teamUrlMap.keySet()) {
-            String teamUrl = teamUrlMap.get(team);
+        for(Team team: teams) {
+            String teamName = team.getName();
+            String teamUrl = team.getUrl();
             try {
                 HtmlPage page = client.getPage(teamUrl);
                 DomElement hittingTable = getTable(page, Constants.teamPitching);
                 DomNodeList<HtmlElement> tableRows = hittingTable.getElementsByTagName(Constants.tr);
                 for(HtmlElement row: tableRows) {
                     if(!row.getFirstChild().asText().equals(Constants.rk)) {
-                        Pitcher pitcher = PitcherService.createPitcher(row, team);
-                        List<Pitcher> roster = map.containsKey(team) ? map.get(team) : new ArrayList<Pitcher>();
+                        Pitcher pitcher = PitcherService.createPitcher(row, teamName);
+                        List<Pitcher> roster = map.containsKey(teamName) ? map.get(teamName) : new ArrayList<Pitcher>();
                         roster.add(pitcher);
-                        map.put(team, roster);
+                        map.put(teamName, roster);
                     }
                 }
             } catch(Exception e) {
@@ -67,18 +70,18 @@ public class TeamService {
         return map;
     }
 
-    public static Map<String, String> getAllTeamsUrlMap(WebClient client) {
-        Map<String, String> americanLeagueUrlMap = getTeamUrlMap(client, Constants.standingsAL);
-        Map<String, String> nationalLeagueUrlMap = getTeamUrlMap(client, Constants.standingsNL);
-        return Util.combineMaps(americanLeagueUrlMap, nationalLeagueUrlMap);
+    public static List<Team> getAllTeamsUrlMap(WebClient client) {
+        List<Team> americanLeagueTeams = getTeamsInLeague(client, Constants.standingsAL);
+        List<Team> nationalLeagueTeams = getTeamsInLeague(client, Constants.standingsNL);
+        return Util.combineTeamLists(americanLeagueTeams, nationalLeagueTeams);
     }
 
-    public static Map<String, String> getTeamUrlMap(WebClient client, String league) {
+    public static List<Team> getTeamsInLeague(WebClient client, String league) {
         try {
             HtmlPage page = client.getPage(Constants.baseUrl);
             DomElement table = getTable(page, league);
             DomNodeList<HtmlElement> rawTeamElements = table.getElementsByTagName(Constants.a);
-            return createTeamUrlMap(rawTeamElements);
+            return createTeamList(rawTeamElements);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -98,14 +101,14 @@ public class TeamService {
         return null;
     }
 
-    public static Map<String, String> createTeamUrlMap(DomNodeList<HtmlElement> rawTeamElements) {
-        Map<String, String> teamUrlMap = new HashMap<String, String>();
+    public static List<Team> createTeamList(DomNodeList<HtmlElement> rawTeamElements) {
+        List<Team> teams = new ArrayList<Team>();
         for(HtmlElement element: rawTeamElements) {
-            String url = element.getAttribute(Constants.href);
+            String url = Constants.baseUrl + element.getAttribute(Constants.href);
             String teamName = element.getAttribute(Constants.title);
-            teamUrlMap.put(teamName, Constants.baseUrl + url);
+            teams.add(new Team(teamName, url));
         }
-        return teamUrlMap;
+        return teams;
     }
     
 }

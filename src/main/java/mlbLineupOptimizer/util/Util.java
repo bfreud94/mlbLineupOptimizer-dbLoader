@@ -3,23 +3,24 @@ package mlbLineupOptimizer.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 
 import mlbLineupOptimizer.constants.Constants;
+import mlbLineupOptimizer.model.Team;
 
 public class Util {
 
-    public static Map<String, String> combineMaps(Map<String, String> map1, Map<String, String> map2) {
-        Map<String, String> map = new HashMap<String, String>(map1);
-        map.putAll(map1);
-        map.putAll(map2);
-        return map;
+    public static List<Team> combineTeamLists(List<Team> listOne, List<Team> listTwo) {
+        List<Team> list = Stream.concat(listOne.stream(), listTwo.stream())
+                                .collect(Collectors.toList());
+        return list;
     }
 
     public static String getMongoUri() {
@@ -45,6 +46,7 @@ public class Util {
         MongoClient mongoClient = new MongoClient(uri);
         MongoDatabase database = mongoClient.getDatabase(databaseName);
         database.drop();
+        System.out.println("Dropped Database: " + databaseName);
         mongoClient.close();
     }
 }
