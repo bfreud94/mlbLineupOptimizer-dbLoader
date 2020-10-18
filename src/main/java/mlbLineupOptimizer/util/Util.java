@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoDatabase;
+
 import mlbLineupOptimizer.constants.Constants;
 
 public class Util {
@@ -34,5 +38,13 @@ public class Util {
             return System.getenv(Constants.mongoUrl);
         }
         return "";
+    }
+
+    public static void dropDatabase(String databaseName) {
+        MongoClientURI uri = new MongoClientURI(Util.getMongoUri());
+        MongoClient mongoClient = new MongoClient(uri);
+        MongoDatabase database = mongoClient.getDatabase(databaseName);
+        database.drop();
+        mongoClient.close();
     }
 }

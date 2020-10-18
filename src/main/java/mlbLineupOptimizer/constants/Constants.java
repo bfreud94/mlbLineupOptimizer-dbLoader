@@ -38,4 +38,5 @@ public final class Constants {
     public static final String cardinalsInvalid = "St. Louis Cardinals";
     public static final String cardinalsValid = "St Louis Cardinals";
     public static final String properties = "mongo.properties";
+    public static final String emptyString = "";
 }
